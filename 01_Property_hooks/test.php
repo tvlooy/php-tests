@@ -42,7 +42,7 @@ class User implements UserInterface
         }
     }
 
-    public function getStuff(): UserInterface
+    public function getThis(): UserInterface
     {
         return $this;
     }
@@ -53,4 +53,5 @@ $x->creationDate = new \DateTime();
 echo $x->userName;
 $x->email = 'tom@ctors.net';
 
-var_dump($x->getStuff()->userName);
+// returns UserInterface but still possible to autocomplete property
+var_dump($x->getThis()->userName);

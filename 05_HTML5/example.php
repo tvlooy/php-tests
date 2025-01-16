@@ -1,5 +1,7 @@
 <?php
 
+// https://wiki.php.net/rfc/domdocument_html5_parser
+
 namespace Dom {
 
     abstract class Document extends Dom\Node implements Dom\ParentNode

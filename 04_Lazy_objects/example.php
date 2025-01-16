@@ -1,5 +1,7 @@
 <?php
 
+// https://wiki.php.net/rfc/lazy-objects
+
 // Used by frameworks (DI, lazy services, ORM), lower level code
 // Huge impact on projects like Doctrine, because of engine support
 

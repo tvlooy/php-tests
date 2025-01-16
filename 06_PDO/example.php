@@ -1,5 +1,7 @@
 <?php
 
+// https://wiki.php.net/rfc/pdo_driver_specific_subclasses
+
 // Instead of object(PDO), you get a subclass Pdo\MySql Pdo\Pgsql Pdo\Sqlite Pdo\Odbc ...
 
 $connection = PDO::connect(

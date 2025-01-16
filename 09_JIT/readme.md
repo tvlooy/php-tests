@@ -1,5 +1,7 @@
 # JIT
 
+https://wiki.php.net/rfc/jit-ir + https://wiki.php.net/rfc/jit_config_defaults
+
     - Since PHP 8.0
     - DynASM
     - Generate directly from Zend VM
@@ -7,7 +9,9 @@
     - tracing (default) / function based
 
 ![compile.png](compile.png)
+
 ![opcache.png](opcache.png)
+
 ![jit.png](jit.png)
 
     - AArch84 backend in 8.1
