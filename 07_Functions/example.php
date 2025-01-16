@@ -36,7 +36,7 @@ function bar() {}
 
 // exit() and die() are proper functions
 
-// Eg: to parse PUT / PATCH HTTM requests:
+// Eg: to parse PUT / PATCH HTTP requests:
 [$_POST, $_FILES] = request_parse_body();
 
 bcceil();
