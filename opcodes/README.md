@@ -71,7 +71,6 @@ Function test:
 Finding entry pointsphp -d extension=vld -d vld.active=1 -d vld.execute=0 -f test2a.php
 Branch analysis from position: 0
 1 jumps found. (Code = 62) Position 1 = -2
-filename:       /home/tvl/Projects/php-tests/opcodes/1.php
 function name:  test
 number of ops:  4
 compiled vars:  !0 = $i
