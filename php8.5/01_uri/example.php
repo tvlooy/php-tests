@@ -16,5 +16,3 @@ var_dump($components['host']);
 $uri = new \Uri\Rfc3986\Uri('https://php.net/releases/8.5/en.php');
 var_dump($uri->getHost());
 // string(7) "php.net"
-
-// https://thephp.foundation/blog/2025/07/11/php-85-adds-pipe-operator/
