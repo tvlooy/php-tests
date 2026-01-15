@@ -349,3 +349,144 @@ path #1: 0,
 End of function test
 ```
 
+## 4. Function nesting vs pipe operator
+
+```
+$ cat test4a.php 
+<?php
+
+$title = ' PHP 8.5 Released ';
+
+$slug = strtolower(
+    str_replace('.', '',
+        str_replace(' ', '-',
+            trim($title)
+        )
+    )
+);
+
+var_dump($slug);
+```
+
+```
+$ php -d extension=vld -d vld.active=1 -d vld.execute=1 -f test4a.php
+Finding entry points
+Branch analysis from position: 0
+1 jumps found. (Code = 62) Position 1 = -2
+function name:  (null)
+number of ops:  14
+compiled vars:  !0 = $title, !1 = $slug
+line      #* E I O op                               fetch          ext  return  operands
+-----------------------------------------------------------------------------------------
+    3     0  E >   ASSIGN                                                       !0, '+PHP+8.5+Released+'
+    5     1        INIT_FCALL                                                   'strtolower'
+    8     2        FRAMELESS_ICALL_1                trim                ~3      !0
+    7     3        FRAMELESS_ICALL_3                str_replace         ~4      '+', '-'
+    8     4        OP_DATA                                                      ~3
+    6     5        FRAMELESS_ICALL_3                str_replace         ~5      '.', ''
+    8     6        OP_DATA                                                      ~4
+          7        SEND_VAL                                                     ~5
+    5     8        DO_ICALL                                             $6      
+          9        ASSIGN                                                       !1, $6
+   13    10        INIT_FCALL                                                   'var_dump'
+         11        SEND_VAR                                                     !1
+         12        DO_ICALL                                                     
+   14    13      > RETURN                                                       1
+
+branch: #  0; line:     3-   14; sop:     0; eop:    13; out0:  -2
+path #1: 0, 
+string(15) "php-85-released"
+```
+
+```
+$ cat test4b.php 
+<?php
+
+$title = ' PHP 8.5 Released ';
+
+$slug = $title
+    |> trim(...)
+    |> (fn($str) => str_replace(' ', '-', $str))
+    |> (fn($str) => str_replace('.', '', $str))
+    |> strtolower(...);
+
+var_dump($slug);
+```
+
+```
+$ php -d extension=vld -d vld.active=1 -d vld.execute=1 -f test4b.php
+Finding entry points
+Branch analysis from position: 0
+1 jumps found. (Code = 62) Position 1 = -2
+function name:  (null)
+number of ops:  21
+compiled vars:  !0 = $title, !1 = $slug
+line      #* E I O op                               fetch          ext  return  operands
+-----------------------------------------------------------------------------------------
+    3     0  E >   ASSIGN                                                       !0, '+PHP+8.5+Released+'
+    5     1        QM_ASSIGN                                            ~3      !0
+    6     2        FRAMELESS_ICALL_1                trim                ~4      ~3
+    7     3        DECLARE_LAMBDA_FUNCTION                              ~5      [0]
+          4        INIT_DYNAMIC_CALL                                            ~5
+    5     5        SEND_VAL_EX                                                  ~4
+    7     6        DO_FCALL                                          0  $6      
+    5     7        QM_ASSIGN                                            ~7      $6
+    8     8        DECLARE_LAMBDA_FUNCTION                              ~8      [1]
+          9        INIT_DYNAMIC_CALL                                            ~8
+    5    10        SEND_VAL_EX                                                  ~7
+    8    11        DO_FCALL                                          0  $9      
+    5    12        QM_ASSIGN                                            ~10     $9
+    9    13        INIT_FCALL                                                   'strtolower'
+    5    14        SEND_VAL                                                     ~10
+    9    15        DO_ICALL                                             $11     
+    5    16        ASSIGN                                                       !1, $11
+   11    17        INIT_FCALL                                                   'var_dump'
+         18        SEND_VAR                                                     !1
+         19        DO_ICALL                                                     
+   13    20      > RETURN                                                       1
+
+branch: #  0; line:     3-   13; sop:     0; eop:    20; out0:  -2
+path #1: 0, 
+
+Dynamic Functions:
+Dynamic Function 0
+Finding entry points
+Branch analysis from position: 0
+1 jumps found. (Code = 62) Position 1 = -2
+function name:  {closure:/test4b.php:7}
+number of ops:  5
+compiled vars:  !0 = $str
+line      #* E I O op                               fetch          ext  return  operands
+-----------------------------------------------------------------------------------------
+    7     0  E >   RECV                                                 !0      
+          1        FRAMELESS_ICALL_3                str_replace         ~1      '+', '-'
+          2        OP_DATA                                                      !0
+          3      > RETURN                                                       ~1
+          4*     > RETURN                                                       null
+
+branch: #  0; line:     7-    7; sop:     0; eop:     4
+path #1: 0, 
+End of Dynamic Function 0
+
+Dynamic Function 1
+Finding entry points
+Branch analysis from position: 0
+1 jumps found. (Code = 62) Position 1 = -2
+function name:  {closure:/test4b.php:8}
+number of ops:  5
+compiled vars:  !0 = $str
+line      #* E I O op                               fetch          ext  return  operands
+-----------------------------------------------------------------------------------------
+    8     0  E >   RECV                                                 !0      
+          1        FRAMELESS_ICALL_3                str_replace         ~1      '.', ''
+          2        OP_DATA                                                      !0
+          3      > RETURN                                                       ~1
+          4*     > RETURN                                                       null
+
+branch: #  0; line:     8-    8; sop:     0; eop:     4
+path #1: 0, 
+End of Dynamic Function 1
+
+string(15) "php-85-released"
+```
+
