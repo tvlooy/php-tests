@@ -2,13 +2,17 @@
 
 - 20 Nov 2025 https://www.php.net/archive/2025.php#2025-11-20-3
 
-![supported_version_calendar.png](supported_version_calendar.png)
-https://www.php.net/supported-versions.php
+[//]: # (![supported_version_calendar.png]&#40;supported_version_calendar.png&#41;)
 
-![package_installs.png](package_installs.png)
-https://packagist.org/php-statistics
+[//]: # (https://www.php.net/supported-versions.php)
 
-![io.png](io.png)
+[//]: # ()
+[//]: # (![package_installs.png]&#40;package_installs.png&#41;)
+
+[//]: # (https://packagist.org/php-statistics)
+
+[//]: # ()
+[//]: # (![io.png]&#40;io.png&#41;)
 
 # Noteworthy
 

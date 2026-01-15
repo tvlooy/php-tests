@@ -5,28 +5,33 @@ class Maybe
 {
     public function __construct(private mixed $value) {}
 
-    public function bind(\Closure $c): Maybe
-    {
-        return $this->value === null
-            ? new Maybe(null)
-            : $c($this->value);
+    public static function of(mixed $value): self {
+        return new self($value);
     }
 
-    public function map(\Closure $c): Maybe
-    {
+    public function bind(callable $fn): self {
         if ($this->value === null) {
-            return new Maybe(null);
+            return new self(null);
         }
-        return new Maybe($c($this->value));
+
+        $result = $fn($this->value);
+
+        return $result instanceof Maybe ? $result : new self($result);
     }
 
-    public function get(): mixed
-    {
+    public function map(callable $fn): self {
+        if ($this->value === null) {
+            return new self(null);
+        }
+        return new self($fn($this->value));
+    }
+
+    public function get(): mixed {
         return $this->value;
     }
 }
 
-$profit = Maybe([1, 4, 5])
+$profit = Maybe::of([1, 4, 5])
     |> loadSeveral(...)
     |> filter(isOnSale(...))
     |> map(sellWidget(...))
