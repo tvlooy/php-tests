@@ -26,10 +26,10 @@ var_dump($slug);
 $title = ' PHP 8.5 Released ';
 
 $slug = $title
-        |> trim(...)
-        |> (fn($str) => str_replace(' ', '-', $str))
-        |> (fn($str) => str_replace('.', '', $str))
-        |> strtolower(...);
+    |> trim(...)
+    |> (fn($str) => str_replace(' ', '-', $str))
+    |> (fn($str) => str_replace('.', '', $str))
+    |> strtolower(...);
 
 var_dump($slug);
 // string(15) "php-85-released"
@@ -39,3 +39,10 @@ var_dump($slug);
 $result = "Hello World" |> strlen(...);
 // Is equivalent to
 $result = strlen("Hello World");
+
+// -----------------------------------------------------
+
+$slug = trim($title);
+$slug = str_replace(' ', '-', $slug);
+$slug = str_replace('.', '', $slug);
+$slug = strtolower($slug);
